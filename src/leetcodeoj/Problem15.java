@@ -1,6 +1,8 @@
 package leetcodeoj;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.Test;
@@ -17,7 +19,7 @@ public class Problem15 {
     }
     
     // O(n^2logn)
-    public List<List<Integer>> threeSum(int[] num) {
+    public List<List<Integer>> threeSum1(int[] num) {
         Arrays.sort(num);
         List<List<Integer>> result = new ArrayList<List<Integer>>();
         int prev1 = Integer.MIN_VALUE;
@@ -46,6 +48,39 @@ public class Problem15 {
         return result;
     }
     
+    // A better solution, O(n^2)
+    List<List<Integer>> threeSum(int[] num) {
+        LinkedList<List<Integer>> result = new LinkedList<List<Integer>>();
+        HashSet<List<Integer>> set = new HashSet<List<Integer>>();
+        Arrays.sort(num);
+        int start, end, current;
+        current = 0;
+        for (int i = 0; i < num.length - 2; ++i) {
+            start = i + 1;
+            end = num.length - 1;
+            while (start < end) {
+                current = num[start] + num[end] + num[i];
+                if (current == 0) {
+                    List<Integer> triplets = new ArrayList<Integer>();
+                    triplets.add(num[i]);
+                    triplets.add(num[start]);
+                    triplets.add(num[end]);
+                    set.add(triplets);
+                    start++;
+                    end--;
+                }else {
+                    if (current > 0) {
+                        end --;
+                    }else {
+                        start++;
+                    }
+                }
+            }
+        }
+        result.addAll(set);
+        return result;
+    }
+
     @Test
     public void binarySerachTest() {
         Problem15 p15 = new Problem15();
@@ -60,20 +95,27 @@ public class Problem15 {
     
     @Test
     public void threeSumTest() {
-        Problem15 p15 = new Problem15();
+       Problem15 p15 = new Problem15();
        List<List<Integer>> actual = p15.threeSum(
                 new int[] {-1, 0, 1, 2, -1, -4});
-        List<List<Integer>> expected = Arrays.asList(
+
+       List<List<Integer>> expected = Arrays.asList(
                 Arrays.asList(-1, 0, 1), Arrays.asList(-1, -1, 2));
-        Assert.assertTrue(expected.size() == actual.size() &&
+       Assert.assertTrue(expected.size() == actual.size() &&
                 expected.containsAll(actual));
         
-        actual = p15.threeSum(new int[] {0, 0, 0, 0});
-        expected = Arrays.asList(Arrays.asList(0, 0, 0));
-        /*for (int i = 0; i < actual.size(); i++) {
+       actual = p15.threeSum(new int[] {0, 0, 0, 0});
+       expected = Arrays.asList(Arrays.asList(0, 0, 0));
+       /*for (int i = 0; i < actual.size(); i++) {
             System.out.println(actual.get(0).get(0) + ", " + actual.get(0).get(1) + ", " + actual.get(0).get(2));
-        }*/
-        Assert.assertTrue(expected.size() == actual.size() &&
+       }*/
+       Assert.assertTrue(expected.size() == actual.size() &&
                 actual.containsAll(expected));
+       
+       actual = p15.threeSum(
+               new int[] {1,2,-2,-1});
+       expected = Arrays.asList();
+       Assert.assertTrue(expected.size() == actual.size() &&
+               actual.containsAll(expected));
     }
 }
