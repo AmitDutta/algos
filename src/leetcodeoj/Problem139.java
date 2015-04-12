@@ -27,9 +27,15 @@ public class Problem139 {
     }
     
     public boolean wordBreak(String s, Set<String> dict) {
-        boolean cost[][] = new boolean[s.length()][s.length()];
+        Boolean cost[][] = new Boolean[s.length()][s.length()];
+        for (int i = 0; i < cost.length; ++i) {
+            for (int j = 0; j < cost.length; ++j) {
+                cost[i][j] = false;
+            }
+        }
         //Integer path[][]= new Integer[s.length()][s.length()];
         Integer path[]= new Integer[s.length()]; // We only need first row
+
         for (int i = 0; i < s.length(); ++i) {
             for (int j = i; j < s.length(); ++j) {
                 String subStr = s.substring(i, j + 1);
@@ -38,21 +44,24 @@ public class Problem139 {
                 }
             }
         }
-        for(int i = 0; i < s.length(); ++i) {
+        // Basically we only care if a[0..len] can be partitoned..therefore,
+        // only calculation for first row will suffice..replace str.length with
+        // 1 in following code and will work
+        //for(int i = 0; i < 1; ++i) {
+            int i = 0;
             for (int j = 0; j < s.length(); j++) {
                 for (int k = i; k < j; ++k) {
                     boolean val = cost[i][k] && cost[k + 1][j];
                     if (val) {
                         cost[i][j] = val;
-                        if (i == 0) {
-                            path[j] = k;
-                        }
+                        path[j] = k;
                     }
                 }
             }
-        }
+        //}
 
-        // Helper.print2DArray(path);
+         //Helper.print1DArray(path);
+         //Helper.print2DArray(cost);
         // printResult(cost, path , s);
 
         return cost[0][s.length() - 1];
@@ -76,18 +85,24 @@ public class Problem139 {
     @Test
     public void Problem139Test() {
         Problem139 p139 = new Problem139();
-        Set<String> dict = new HashSet<>(Arrays.asList("a", "m", "i", "t"));
-        /*Assert.assertTrue(p139.wordBreak("amit", dict));
+        Set<String> dict = new HashSet<>(Arrays.asList("am", "it"));
+        Assert.assertTrue(p139.wordBreak("amit", dict));
+
+        dict = new HashSet<>(Arrays.asList("t"));
+        Assert.assertFalse(p139.wordBreak("a", dict));
+        
         dict = new HashSet<>(Arrays.asList("t", "lee", "code"));
-        Assert.assertTrue(p139.wordBreak("leetcode", dict));*/
+        Assert.assertTrue(p139.wordBreak("leetcode", dict));
         
         dict = new HashSet<>(Arrays.asList("t", "co", "d", "e", "et", "le"));
         Assert.assertTrue(p139.wordBreak("leetcode", dict));
         
         dict = new HashSet<>(Arrays.asList("leet", "cod1"));
         Assert.assertFalse(p139.wordBreak("leetcode", dict));
+        
         dict = new HashSet<>(Arrays.asList("l", "e", "et", "c", "o1", "e"));
         Assert.assertFalse(p139.wordBreak("leetcode", dict));
+        
         dict = new HashSet<>(Arrays.asList("l", "e", "", "c", "o1", "e"));
         Assert.assertFalse(p139.wordBreak("leetcode", dict));
     }
