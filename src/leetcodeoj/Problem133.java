@@ -35,10 +35,10 @@ public class Problem133 {
           if (!map.contains(child.label)) {
              cloneGraphInt(child, cloned);
           }else {
-             // find cloned nodes and those it it's neighbour
+             // find cloned nodes and those it it's neighbor
              // why the other map? when we visit 3, we already visited 1 and 2
-             // therefore no recusrive call to them..we still need to add 1 and 
-             // 2 to 3's neighbour list. We can get cloned nodes from clonedmap
+             // therefore no recursive call to them..we still need to add 1 and 
+             // 2 to 3's neighbor list. We can get cloned nodes from cloned map
              /*         
               *     1 -- 3
               *      \  /
