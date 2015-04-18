@@ -81,7 +81,7 @@ public class AllFactors {
             return;
         }
         for (int i = start; i < str.length(); ++i) {
-            
+            // should be i > start
             if (i > 0 && str.charAt(i) == str.charAt(i - 1)) {
                 continue;
             }
