@@ -1,4 +1,4 @@
-package practise;
+package misc;
 
 public class Pyramid {
    public void print(int howMany, String str) {
