@@ -6,21 +6,21 @@ import java.util.ArrayList;
 import java.util.Queue;
 
 public class TreeNode {
-   private int data;
-   private TreeNode left, right;
+   public int val;
+   public TreeNode left, right;
    public TreeNode(int data) {
-      this.data = data;
+      this.val = data;
       left = right = null;
    }
 
    public TreeNode(int data, TreeNode left, TreeNode right) {
-      this.data = data;
+      this.val = data;
       this.left = left;
       this.right = right;
    }
 
    public int getData() { 
-      return this.data;
+      return this.val;
    }
 
    public TreeNode getLeft() {
@@ -47,7 +47,7 @@ public class TreeNode {
       List<Integer> lst = new ArrayList<Integer>();
       while (queue.size() > 0) {
          TreeNode node = queue.poll();
-         lst.add(node.data);
+         lst.add(node.val);
          current--;
          if (node.left != null) {
             queue.offer(node.left);
