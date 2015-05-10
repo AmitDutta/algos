@@ -29,25 +29,28 @@ public class Problem114 {
    public void flattenRec(TreeNode root) {
       flattenInt(root);
    }
-   
-   // This is really good stack based problem
-   // This can be done without extra storage
+   // Look for in place
+   // Simple pre order.
    public void flatten(TreeNode root) {
-      if (root == null) return;
+      if (root == null) {
+         return;
+      }
       Stack<TreeNode> stack = new Stack<TreeNode>();
-      TreeNode node = root;
-      
-      while (node != null || !stack.isEmpty()) {
+      stack.push(root);
+      TreeNode prev = null;
+      while (!stack.empty()) {
+         TreeNode node = stack.pop();
+         if (prev != null) {
+            prev.right = node;
+            prev.left = null;
+         }
+         prev = node;
          if (node.right != null) {
             stack.push(node.right);
          }
          if (node.left != null) {
-            node.right = node.left;
-            node.left = null;
-         }else if (!stack.empty()) {
-            node.right = stack.pop();
+            stack.push(node.left);
          }
-         node = node.right;
       }
    }
    @Test
