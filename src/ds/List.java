@@ -6,6 +6,10 @@ public class List {
       public ListNode (int x) {val = x;}
    }
    public ListNode head;
+   public List() {}
+   public List(int[] items) {
+      addAll(items);
+   }
    public void add(int item) {
       if (head == null) {
          head = new ListNode(item);
