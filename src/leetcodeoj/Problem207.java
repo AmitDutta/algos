@@ -44,13 +44,12 @@ public class Problem207 {
          addEdge(pair[0], pair[1]);
       }
       for (int i = 0; i < v; ++i) {
-         if (!marked[i]) {
-            onstack = new boolean[v];
-            hasCycle = false;
-            dfs(i);
-            if (hasCycle) {
-               break;
-            }
+         marked = new boolean[v];
+         onstack = new boolean[v];
+         hasCycle = false;
+         dfs(i);
+         if (hasCycle) {
+            break;
          }
       }
       return !hasCycle;
