@@ -75,10 +75,48 @@ public class Problem17 {
       }
       return result;
    }
-   
+      
    public List<String> letterCombinations(String digits) {
       //return letterCombinationsInt(digits, new StringBuffer(), 0);
       return letterCombinationsInt(digits, 0, new char[digits.length()], 0);
+   }
+   
+   private List<String> result;
+   public List<Character> getLetters(char ch) {
+      if (ch == '2') {
+         return Arrays.asList('a', 'b', 'c');
+      } else if (ch == '3') {
+         return Arrays.asList('d', 'e', 'f');
+      } else if (ch == '4') {
+         return Arrays.asList('g', 'h', 'i');
+      } else if (ch == '5') {
+         return Arrays.asList('j', 'k', 'l');
+      } else if (ch == '6') {
+         return Arrays.asList('m', 'n', 'o');
+      } else if (ch  == '7') {
+         return Arrays.asList('p', 'q', 'r', 's');
+      } else if (ch == '8') {
+         return Arrays.asList('t', 'u', 'v');
+      }
+      return Arrays.asList('w', 'x', 'y', 'z');
+   }
+   public void letterInt(String digits, int current, StringBuffer buffer) {
+       if (current == digits.length()) {
+           result.add(buffer.toString());
+           return;
+       }
+       List<Character> chars = getLetters(digits.charAt(current));
+       for (Character ch : chars) {
+           buffer.append(ch);
+           letterInt(digits, current + 1, buffer);
+           buffer.setLength(buffer.length() - 1);
+       }
+   }
+   public List<String> letterCombinations1(String digits) {
+      result = new ArrayList<String>();
+      if (digits.length() == 0) return result;
+      letterInt(digits, 0, new StringBuffer());
+      return result;
    }
 
    @Test

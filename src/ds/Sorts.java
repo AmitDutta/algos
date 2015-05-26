@@ -1,4 +1,9 @@
 package ds;
+
+import java.util.Comparator;
+
+import org.junit.*;
+
 public class Sorts {
    public static void insertionsort(int[] nums) {
       for (int i = 1; i < nums.length; ++i){
@@ -15,9 +20,38 @@ public class Sorts {
    }
    public static void swap(int nums[], int i, int j) {
       int tmp = nums[i];
-      nums[j] = nums[i];
-      nums[i] = tmp;
+      nums[i] = nums[j];
+      nums[j] = tmp;
    }
+   
+   public class IntegerComparator implements Comparator<Integer> {
+
+      @Override
+      public int compare(Integer o1, Integer o2) {
+        if (o1.equals(o2)) return 0;
+        if (o1 <  o2) return -1;
+        return 1;
+      }
+   }
+
+   // Based on the comparator, zeros will move left or right
+   public static void moveZeros(int nums[], IntegerComparator cmp) {
+      int pivot = 0;
+      int lt = -1;
+      int gt = nums.length - 1;
+      for (int j = 0; j <= gt; ) {
+         if (cmp.compare(nums[j], pivot) > 0) {
+            swap(nums, j, gt);
+            gt--;
+         } else if (cmp.compare(nums[j], pivot) < 0) {
+            swap(nums, j, ++lt);
+            ++j;
+         } else {
+            ++j;
+         }
+      }
+   }
+
    public static void partition(int nums[]) {
       int lo = 0, high = nums.length - 1;
       int lt = lo, gt = high;
@@ -34,6 +68,15 @@ public class Sorts {
          } else {
             ++i;
          }
+      }
+   }
+
+   @Test
+   public void moveZerosLeft1() {
+      int[] num = {5,6,9,20,100,0};
+      moveZeros(num, new IntegerComparator());
+      for (int i = 0; i < num.length; ++i) {
+         System.out.println(num[i]);
       }
    }
 }

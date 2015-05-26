@@ -11,8 +11,19 @@ public class Problem214 {
    // With 2D array, memory limit exceeded
    // Even wtih 1D array, Out of memory..
    // I think different algorithm required..
+   public boolean ispalindrome(String s) {
+      for (int i = 0, j = s.length() - 1; i <= j; ++i, --j) {
+         if (s.charAt(i) != s.charAt(j)) {
+            return false;
+         }
+      }
+      return true;
+   }
    public String shortestPalindrome(String s) {
       if (s.length() == 0) {
+         return s;
+      }
+      if (ispalindrome(s)) {
          return s;
       }
       int space = (s.length() * (s.length() + 1)) / 2;
@@ -50,5 +61,9 @@ public class Problem214 {
       Assert.assertEquals("dcbabcd", shortestPalindrome("abcd"));
       Assert.assertEquals("aaacecaaa", shortestPalindrome("aacecaaa"));
       Assert.assertEquals("", shortestPalindrome(""));
+   }
+   @Test
+   public void test2() {
+      Assert.assertTrue(ispalindrome("aaaa"));
    }
 }
