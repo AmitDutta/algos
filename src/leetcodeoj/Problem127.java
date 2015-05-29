@@ -12,79 +12,51 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class Problem127 {
-
-  /* private List<String> getNeighbours(String str) {
-      List<String> neighbours = new ArrayList<String>();
-      for (char ch = 'a'; ch <= 'z'; ++ch) {
-         for (int i = 0; i < str.length(); ++i) {
-            if (ch != str.charAt(i)) {
-               String candidate = str.substring(0, i) + ch + str.substring(i+1);
-               neighbours.add(candidate);
-               
-            }
-         }
-      }
-      return neighbours;
-   }*/
-   
+   private Set<String> dict;
    private List<String> getNeighbours(String str) {
-      List<String> neighbours = new ArrayList<String>();
-      char input[] = str.toCharArray();
-      for (int i = 0; i < input.length; ++i) {
-         char orig = input[i];
+      List<String> items = new ArrayList<String>();
+      for (int i = 0; i < str.length(); ++i) {
+         char[] chars = str.toCharArray();
          for (char ch = 'a'; ch <= 'z'; ++ch) {
-            if (ch != orig) {
-               input[i] = ch;
-               neighbours.add(new String(input));
+            if (ch != str.charAt(i)) {
+               chars[i] = ch;
+               String item = new String(chars);
+               if (dict.contains(item)) {
+                  items.add(item);
+                  dict.remove(item);
+               }
             }
-            
          }
-         input[i] = orig;
       }
-      return neighbours;
+      return items;
    }
-
-   // This is very simple problem.. Keep that in mind
    public int ladderLength(String beginWord, String endWord, Set<String> wordDict) {
-      int current, next, levels;
-      current = next = levels = 0;
-      // Without using used set, got TLE. Basically, in one ladder, there will
-      // be no repetation of strings
-      Set<String> used = new HashSet<String>();
+      dict = wordDict;
+      dict.add(endWord);
+      if (beginWord.equals(endWord)) return 0;
       Queue<String> queue = new LinkedList<String>();
-      queue.offer(beginWord);
-      used.add(beginWord);
-      current = 1;
-      levels = 0;
+      queue.add(beginWord);
+      int current = 1, hops = 1, next = 0;
       boolean found = false;
       while (queue.size() > 0) {
-         String str = queue.poll();
+         String node = queue.poll();
          current--;
-
-         List<String> neighbours = getNeighbours(str);
-         /*if (neighbours.contains(endWord)) {
+         if (node.equals(endWord)) {
             found = true;
-         }*/
-
-         for (String child : neighbours) {
-            if (child.equals(endWord)) {
-               found = true;
-            }
-            if (wordDict.contains(child) && !used.contains(child)) {
-               queue.offer(child);
-               used.add(child);
-               next++;
-            }
+            break;
          }
-
+         List<String> children = getNeighbours(node);
+         for (String child : children) {
+            queue.add(child);
+            next++;
+         }
          if (current == 0) {
             current = next;
             next = 0;
-            levels++;
-            if (found) break;
+            hops++;
          }
       }
-      return found ? levels + 1: 0;
+      return found ? hops : 0;
    }
 
    @Test
