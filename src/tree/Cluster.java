@@ -59,7 +59,7 @@ public class Cluster {
       
       TreeNode root = getMaxClusterRoot(node1);
       //System.out.println(node1.getData());
-      List<List<Integer>> subTree = root.toLevelOrder();
+      List<List<Integer>> subTree = TreeNode.toLevelOrder(root);
       for (List<Integer> level : subTree) {
          for (Integer i : level) {
             System.out.print(i + " ");
