@@ -41,7 +41,7 @@ public class TreeCodes {
       node2.left = node4;
       node2.right = node5;
       TreeNode result = flip(node1);
-      String str = TreeNode.toPreOrder(result);
+      /*String str = TreeNode.toPreOrder(result);
       System.out.println(str);
       
       TreeNode root = TreeNode.fromPreOrder(str);
@@ -51,7 +51,7 @@ public class TreeCodes {
             System.out.print(i + " "); 
          }
          System.out.println();
-      }
+      }*/
       
    }
 }

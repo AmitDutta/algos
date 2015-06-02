@@ -67,43 +67,10 @@ public class TreeNode {
       }
       return result;
    }
-
-   public static String toPreOrder(TreeNode node) {
-      StringBuffer buffer = new StringBuffer();
-      Stack<TreeNode> stack = new Stack<TreeNode>();
-      stack.push(node);
-      while (!stack.empty()) {
-         TreeNode nd = stack.pop();
-         buffer.append(nd.val);
-         if (nd.left == null) {
-            buffer.append('#');
-         }
-         if (nd.right == null) {
-            buffer.append('#');
-         } else {
-            stack.push(nd.right);
-         }
-         if (nd.left != null) {
-            stack.push(nd.left);
-         }
-      }
-      return buffer.toString();
-   }
-   private static TreeNode fromPreOrderInt(String str, int[] i) {
-      if (i[0] >= str.length()) {
-         return null;
-      }
-      if (str.charAt(i[0]) == '#') {
-         i[0]++;
-         return null;
-      }
-      TreeNode node = new TreeNode(str.charAt(i[0]) - '0');
-      i[0]++;
-      node.left = fromPreOrderInt(str, i);
-      node.right = fromPreOrderInt(str, i);
-      return node;
-   }
-   public static TreeNode fromPreOrder(String str) {
-      return fromPreOrderInt(str, new int[]{0});
+   public static boolean AreEqualTree(TreeNode node1, TreeNode node2) {
+      if (node1 == null) return node2 == null;
+      if (node2 == null) return node1 == null;
+      return node1.val == node2.val && AreEqualTree(node1.left, node2.left) &&
+            AreEqualTree(node1.right, node2.right);
    }
 }
