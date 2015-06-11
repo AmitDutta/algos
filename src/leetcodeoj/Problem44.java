@@ -9,24 +9,24 @@ public class Problem44 {
       pi =  si = 0;
       starIndex = ss = -1;
       while (si < s.length()) {
-         if (si < s.length() && pi < p.length() && s.charAt(si) == p.charAt(pi)) {
+         if (pi < p.length() && s.charAt(si) == p.charAt(pi)) {
             si++;
             pi++;
             continue;
          }
-         if (si < s.length() && pi < p.length() && p.charAt(pi) == '?') {
+         if (pi < p.length() && p.charAt(pi) == '?') {
             si++;
             pi++;
             continue;
          }
-         if (si < s.length() && pi < p.length() && p.charAt(pi) == '*') {
+         if (pi < p.length() && p.charAt(pi) == '*') {
             starIndex = pi;
             pi++;
             ss = si;
             continue;
          }
          if (starIndex != -1) {
-            pi = starIndex + 1;
+            pi = starIndex + 1; // This line is important...
             si = ++ss;
             continue;
          }
@@ -55,5 +55,8 @@ public class Problem44 {
       Assert.assertFalse(isMatch("aab", "c*a*b*"));
       Assert.assertTrue(isMatch("abkbckd", "a*b*c*"));
    }
-   
+   @Test
+   public void Test1() {
+      Assert.assertTrue(isMatch("bkyz","b*z"));
+   }
 }
