@@ -7,41 +7,30 @@ import java.util.List;
 import org.junit.Test;
 
 public class Problem40 {
-   private List<List<Integer>> lst = new ArrayList<List<Integer>>();
-   
-   private void combinationSumInt(int[] candidates, int target,
-         List<Integer> current, int value, int start) {
-      if (value > target) {
-         return;
-      }
-      if (value == target) {
-         List<Integer> item = new ArrayList<Integer>(current);
-         //Collections.sort(item);
-         lst.add(item);
-         return;
-      }
-      
-      for (int i = start; i < candidates.length; ++i) {
-         //if (!used[i]) {
-            if (i > start && candidates[i - 1] == candidates[i]) continue;
-            // why i > start? At each level, we are only allowed to take one 
-            // duplicated item. first level, index starts from zero, so we take
-            // first one, and skip nexts. Second level, we do the same thing..
-            // so always i > start..
-            
-            current.add(candidates[i]);
-            value += candidates[i];
-            combinationSumInt(candidates, target, current, value, i + 1);
-            value -= candidates[i];
-            current.remove(current.size() - 1);
-         
-      }
+   List<List<Integer>> result;
+   private void combinationSumInt(int[] candidates, int cur, int start, int target, List<Integer> items) {
+       if (cur > target) {
+           return;
+       }
+       if (cur == target) {
+           List<Integer> lst = new ArrayList<Integer>(items);
+           result.add(lst);
+           return;
+       }
+       for (int i = start; i < candidates.length; ++i) {
+           if (i > 0 && i > start && candidates[i] == candidates[i - 1]) {
+               continue;
+           }
+           items.add(candidates[i]);
+           combinationSumInt(candidates, cur + candidates[i], i + 1, target, items);
+           items.remove(items.size() - 1);
+       }
    }
-   
    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
-      Arrays.sort(candidates);
-      combinationSumInt(candidates, target, new ArrayList<Integer>(), 0, 0);
-      return lst;
+       result = new ArrayList<List<Integer>>();
+       Arrays.sort(candidates);
+       combinationSumInt(candidates, 0, 0, target, new ArrayList<Integer>());
+       return result;
    }
    
    @Test

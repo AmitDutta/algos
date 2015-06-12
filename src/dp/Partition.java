@@ -124,4 +124,9 @@ public class Partition {
       int[] a2 = {1,2,3,4,5,6,7,8,9};
       Assert.assertEquals(17, partitionDp(a2, 3));
    }
+   @Test
+   public void test3() {
+      int[] a = {568, 712, 412, 231, 241, 393, 865, 287, 128, 457, 238, 98, 980, 23, 782};
+      Assert.assertEquals(1785, partition(a, 4, false));
+   }
 }
