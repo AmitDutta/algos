@@ -71,6 +71,18 @@ public class Sorts {
       }
    }
 
+   public static void bubblesort(int[] nums) {
+      // at each iteration, one items bubbles to its destination
+      for (int i = 0; i < nums.length; ++i) {
+         for (int j = i + 1; j < nums.length; ++j) {
+            if (nums[i] > nums[j]) {
+               int tmp = nums[j];
+               nums[j] = nums[i];
+               nums[i] = tmp;
+            }
+         }
+      }
+   }
    @Test
    public void moveZerosLeft1() {
       int[] num = {5,6,9,20,100,0};
@@ -78,5 +90,17 @@ public class Sorts {
       for (int i = 0; i < num.length; ++i) {
          System.out.println(num[i]);
       }
+   }
+   @Test
+   public void test1() {
+      int[] num = {1,5,4,3,2,1};
+      bubblesort(num);
+      for (int k = 0; k < num.length; ++k) {
+         System.out.print(num[k]);
+         if (k < num.length - 1) {
+            System.out.print(",");
+         }
+      }
+      System.out.println();
    }
 }
