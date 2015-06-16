@@ -67,8 +67,9 @@ public class Misc {
          map.put(ch, 0);
       }
       // count frequencies of each order items, and at same time, group all
-      // other items which are not in order
-      int i = -1;
+      // other items which are not in order at the end of string. Just fix
+      // the tail first.
+      /*int i = -1;
       for (int j = 0; j < nums.length; ++j) {
          if (!map.containsKey(nums[j])) {
             nums[++i] = nums[j];
@@ -76,12 +77,21 @@ public class Misc {
          if (map.containsKey(nums[j])) {
             map.put(nums[j], map.get(nums[j]) + 1);
          }
+      }*/
+      int i = nums.length;
+      for (int j = nums.length - 1; j >= 0; --j) {
+         if (!map.containsKey(nums[j])) {
+            nums[--i] = nums[j];
+         }
+         if (map.containsKey(nums[j])) {
+            map.put(nums[j], map.get(nums[j]) + 1);
+         }
       }
       // now all the non order items are in 0 to i
       // since order items will come first, lets move these to end
-      for (int j = i, k = nums.length - 1; j >= 0; --j, --k) {
+      /*for (int j = i, k = nums.length - 1; j >= 0; --j, --k) {
          nums[k] = nums[j];
-      }
+      }*/
       int start = 0;
       for (char ch : order) {
          int cnt = map.get(ch);
