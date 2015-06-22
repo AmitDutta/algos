@@ -4,7 +4,7 @@ import ds.TreeNode;
 
 public class LCA {
    public TreeNode LCA(TreeNode root, TreeNode p, TreeNode q) {
-      if (root == null || q == null || q == null) {
+      if (root == null || p == null || q == null) {
          return null;
       }
       if (p.val == root.val || q.val == p.val) {

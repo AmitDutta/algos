@@ -36,4 +36,13 @@ public class FilteringIteratorTest {
       Assert.assertFalse(filter.hasNext());
       filter.next();
    }
+   
+   @Test
+   public void test3() {
+      List<Integer> lst = Arrays.asList(1,2,3);
+      PeekingIterator<Integer> peek = new PeekingIterator<Integer>(lst.iterator());
+      while (peek.hasNext()) {
+         System.out.println( peek.next() + ":" + peek.top());
+      }
+   }
 }

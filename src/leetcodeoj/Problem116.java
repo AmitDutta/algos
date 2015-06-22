@@ -55,6 +55,21 @@ public class Problem116 {
       System.out.println();
       print(tn.left);
    }
+   
+   // For complete tree only
+   public void connectCompleteTree(TreeLinkNode root) {
+      if (root == null) {
+          return;
+      }
+      if (root.left != null && root.right != null) {
+          root.left.next = root.right;
+          if (root.next != null) {
+              root.right.next = root.next.left;
+          }
+      }
+      connect(root.left);
+      connect(root.right);
+  }
 
    // This is O(n) space, did not read the question properly !!
    public void connect1(TreeLinkNode root) {
