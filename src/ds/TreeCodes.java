@@ -67,4 +67,10 @@ public class TreeCodes {
       node2.right = node5;
       TreeNode.printAllPaths(node1);
    }
+   
+   @Test
+   public void test3() {
+      TreeNode node = TreeNode.FromLevelOrderArray(new String[] {"1","2","3","#","#","#","#"});
+      TreeNode.toLevelOrderPrint(node);
+   }
 }

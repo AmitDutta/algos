@@ -114,4 +114,20 @@ public class TreeNode {
       return node1.val == node2.val && AreEqualTree(node1.left, node2.left) &&
             AreEqualTree(node1.right, node2.right);
    }
+   
+   private static TreeNode FromLevelOrderArrayInt(String[] array, int k) {
+      TreeNode nd = null;
+      if (k < array.length) {
+         if (array[k] != "#") {
+            nd = new TreeNode(Integer.parseInt(array[k]));
+            nd.left = FromLevelOrderArrayInt(array, 2 * k + 1);
+            nd.right = FromLevelOrderArrayInt(array, 2 * k + 2);
+         }
+      }
+      return nd;
+   }
+   
+   public static TreeNode FromLevelOrderArray(String[] array) {
+      return FromLevelOrderArrayInt(array, 0);
+   }
 }

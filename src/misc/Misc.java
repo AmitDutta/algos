@@ -241,4 +241,14 @@ public class Misc {
       orderSort(items, key);
       Assert.assertArrayEquals(expecteds, items);
    }
+   /*
+    * Input: A string equation that contains numbers, '+' and '*' 
+   //      Output: Result as int. 
+   //   
+   //      For example: 
+   //      Input: 3*5+8 (as String) 
+   //      Output: 23 (as int)
+    * */
+   // Stack will work, we will have to parenthesis them..here only + and *, so
+   //we can just tockenize with +, do all multiplication and add!
 }

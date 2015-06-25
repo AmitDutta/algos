@@ -99,12 +99,41 @@ public class AllFactors {
         NchooseKInt(str, new StringBuffer(), n, k, 0);
     }
     
+    private List<List<Integer>> result;
+    private void stairs(int n, int cur, int[] items, List<Integer> buffer) {
+       if (cur >= n) {
+          if (cur == n) {
+             List<Integer> itm = new ArrayList<Integer>(buffer);
+             result.add(itm);
+          }
+          return;
+       }
+       for (int i = 0; i < items.length; ++i) {
+          buffer.add(items[i]);
+          stairs(n, cur + items[i], items, buffer);
+          buffer.remove(buffer.size() - 1);
+       }
+    }
+    
+    public List<List<Integer>> stairs(int n) {
+       result = new ArrayList<List<Integer>>();
+       stairs(n, 0, new int[] {1, 2}, new ArrayList<Integer>());
+       return result;
+    }
+    
     public static void main(String[] args) {
         //AllFactors af = new AllFactors(100);
         /* String str = "abbccaad";
         af.NchooseK(str, str.length(), 3); */
         AllFactors af = new AllFactors();
-        String str = "142";
-        af.NchooseK(str, str.length(), 3);
+        /*String str = "142";
+        af.NchooseK(str, str.length(), 3);*/
+        List<List<Integer>> lst = af.stairs(5);
+        for(List<Integer> itm : lst) {
+           for (Integer i : itm) {
+              System.out.print(i + " ");
+           }
+           System.out.println();
+        }
     }
 }

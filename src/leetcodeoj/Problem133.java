@@ -50,6 +50,26 @@ public class Problem133 {
        }
        return cloned;
     }
+    
+    private Set<UndirectedGraphNode> set = new HashSet<UndirectedGraphNode>();
+    private Map<Integer, UndirectedGraphNode> map1 = 
+          new HashMap<Integer, UndirectedGraphNode>();
+    public UndirectedGraphNode cloneGraph1(UndirectedGraphNode node) {
+       if (node == null) {
+          return null;
+       }
+       set.add(node);
+       UndirectedGraphNode copy = new UndirectedGraphNode(node.label);
+       map1.put(node.label, copy);
+       for (UndirectedGraphNode child : node.neighbors) {
+          if (!set.contains(child)) {
+             copy.neighbors.add(cloneGraph(child));
+          } else {
+             copy.neighbors.add(map1.get(child.label));
+          }
+       }
+       return copy;
+    }
 
     public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
         map = new HashSet<Integer>();
