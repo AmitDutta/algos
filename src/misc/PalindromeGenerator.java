@@ -1,7 +1,5 @@
 package misc;
 
-import java.util.Random;
-
 public class PalindromeGenerator {
    public String generate(int len) {
       if (len == 0) return "";
