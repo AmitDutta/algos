@@ -1,8 +1,18 @@
 package misc;
 
+// y = (1 - x) * a + x * b
+/*
+ * int[] t = new int[2];
+ * t[0] = a;
+ * t[1] = b;
+ * y = t[x]
+ * */
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -157,6 +167,22 @@ public class Misc {
       }
    }
 
+   private int depthSum(Object lst, int level) {
+      if (lst instanceof Integer) {
+         return ((Integer)lst) * level; 
+      }
+      List<Object> l = (List<Object>) lst;
+      int sum = 0;
+      for (Object o : l) {
+         sum += depthSum(o, level + 1);
+      }
+      return sum;
+   }
+   
+   public int depthSum(Object lst) {
+      return depthSum(lst, 0);
+   }
+   
    public void isSorted(int[] a) {
       int[] b = new int[a.length];
       System.arraycopy(a, 0, b, 0, a.length);
@@ -164,6 +190,14 @@ public class Misc {
       Assert.assertArrayEquals(a, b);
    }
 
+   @Test
+   public void testDepthSum1() {
+      List<Object> lst = new ArrayList<Object>();
+      lst.add(Arrays.asList(1,1));
+      lst.add(2);
+      lst.add(Arrays.asList(1,1));
+      Assert.assertEquals(10, depthSum(lst));
+   }
    @Test
    public void almostSortedTest1() {
       int[] a = new int[]{};
@@ -251,4 +285,11 @@ public class Misc {
     * */
    // Stack will work, we will have to parenthesis them..here only + and *, so
    //we can just tockenize with +, do all multiplication and add!
+   
+   /*You are given four integers 'a', 'b', 'y' and 'x', where 'x' can only be either zero or one. Your task is as follows: 
+
+   If 'x' is zero assign value 'a' to the variable 'y', if 'x' is one assign value 'b' to the variable 'y'. 
+
+   You are not allowed to use any conditional operator (including ternary operator). 
+   Follow up: Solve the problem without utilizing arithmetic operators '+ - * /'.*/
 }

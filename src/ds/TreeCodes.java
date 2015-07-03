@@ -22,7 +22,7 @@ public class TreeCodes {
       if (result == null) {
          result = left;
       }
-      return right;
+      return root;
    }
    
    private int diameter = 0;
@@ -159,18 +159,7 @@ public class TreeCodes {
       node2.left = node4;
       node2.right = node5;
       TreeNode result = flip(node1);
-      /*String str = TreeNode.toPreOrder(result);
-      System.out.println(str);
-      
-      TreeNode root = TreeNode.fromPreOrder(str);
-      List<List<Integer>> lst = TreeNode.toLevelOrder(root);
-      for (List<Integer> l : lst) {
-         for (Integer i : l) {
-            System.out.print(i + " "); 
-         }
-         System.out.println();
-      }*/
-      
+      TreeNode.toLevelOrderPrint(result);
    }
    @Test
    public void test2() {

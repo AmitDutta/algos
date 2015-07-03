@@ -11,6 +11,8 @@ public class Problem97 {
    // without using the map, got tle..cache s1, s2 and s2, s1 pair which
    // does not result valid result.
    // http://www.ardendertat.com/2011/10/10/programming-interview-questions-6-combine-two-strings/
+
+   // runtime with cache O(nm). We cache the results which returns false..
    private Map<String, String> cache = new HashMap<String, String>();
 
    public boolean isInterleave(String s1, String s2, String s3) {
@@ -42,6 +44,7 @@ public class Problem97 {
          return true;
       }
 
+      // cache these results since next time if we encounter them, just return false;
       cache.put(s1, s2);
       cache.put(s2, s1);
 
