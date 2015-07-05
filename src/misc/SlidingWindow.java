@@ -14,6 +14,19 @@ public class SlidingWindow {
   * [1, 3, 5, 23, 2], 8. Return True because 3 + 5 = 8 
   * [1, 3, 5, 23, 2], 7 Return False because no sequence in this array adds up to 7
   */
+   
+   public boolean findSum2(int[] a, int T) {
+      int sum = 0, start = 0;
+      for (int i = 0; i < a.length; ++i) {
+         sum += a[i];
+         while (sum - a[start] >= T) {
+            sum -= a[start++];
+         }
+         if (sum == T) return true;
+      }
+      return false;
+   }
+   
    public boolean findSum(int[] a, int T) {
       int j = 0, sum = 0;
       for (int i = 0; i < a.length; ++i) {
@@ -30,9 +43,9 @@ public class SlidingWindow {
    }
    @Test
    public void findSumTest1() {
-      Assert.assertTrue(findSum(new int[] {23,5,4,7,2,11}, 20));
-      Assert.assertTrue(findSum(new int[] {1, 3, 5, 23, 2}, 8));
-      Assert.assertFalse(findSum(new int[] {1, 3, 5, 23, 2}, 7));
+      Assert.assertTrue(findSum2(new int[] {23,5,4,7,2,11}, 20));
+      Assert.assertTrue(findSum2(new int[] {1, 3, 5, 23, 2}, 8));
+      Assert.assertFalse(findSum2(new int[] {1, 3, 5, 23, 2}, 7));
    }
    
    public int lengthOfLongestSubstring(String s) {

@@ -26,7 +26,7 @@ public class BSTTest {
       Assert.assertEquals(b.length, k);
       Assert.assertEquals(b.length, bst.size());
    }
-   
+
    @Test
    public void ceilingTest() {
       Assert.assertEquals(new Integer(20), bst.celing(16));
@@ -43,7 +43,7 @@ public class BSTTest {
       Assert.assertEquals(new Integer(6), bst.floor(8));
       Assert.assertEquals(new Integer(15), bst.floor(15));
    }
-   
+
    @Test
    public void rankTest() {
       Assert.assertEquals(0, bst.rank(1));
@@ -54,7 +54,7 @@ public class BSTTest {
       Assert.assertEquals(4, bst.rank(15));
       Assert.assertEquals(6, bst.rank(30));
    }
-   
+
    @Test
    public void kthSmallestTest() {
       // zero based, first item is zeroth smallest

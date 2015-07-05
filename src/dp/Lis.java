@@ -11,6 +11,8 @@ public class Lis {
    }
    // cost[i] has the longest sequence ending at i; means including i
    // it may not be the overall longest, for that we need to find max
+   // consider [10,20,30,40,-1], now max list length is 4, but cost[4]
+   // will be 1. cost[i] is the lis that includes i
    public int longestIncreasingSubsequence(int[] nums) {
       // write your code here
       if (nums.length == 0) return 0;
