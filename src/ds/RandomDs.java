@@ -14,6 +14,8 @@ import java.util.Random;
 // We will use arraylist and hashmap
 // get should be getat, this is not key value, just item. so nothing to get
 // by item
+// We need the map here because all the methods are accessed with the item,
+// not index
 public class RandomDs <T> {
    private List<T> lst;
    private Map<T, Integer> map;
