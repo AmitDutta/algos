@@ -1,4 +1,4 @@
-package Onetwobyteencoding;
+package misc;
 
 import org.junit.*;
 
