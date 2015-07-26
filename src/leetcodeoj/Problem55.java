@@ -33,8 +33,23 @@ public class Problem55 {
       return cost[nums.length - 1];
    }
    
-   // O(1) space
    public boolean canJump(int[] nums) {
+      if (nums.length == 1) return true;
+      int last = 0;
+      for (int i = 0; i < nums.length; ++i) {
+          if (i > last) {
+              return false;
+          }
+          last = Math.max(last, i + nums[i]);
+          if (last >= nums.length - 1) {
+              return true;
+          }
+      }
+      return false;
+  }
+   
+   // O(1) space
+   public boolean canJump2(int[] nums) {
       if (nums.length == 0) return false;
       if (nums.length == 1) return true;
       int lastIndex = 0;
