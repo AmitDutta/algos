@@ -15,7 +15,7 @@ public class Problem189 {
    }
    
    // Still not O(1) space :(
-   public void rotate(int[] nums, int k) {
+   public void rotate2(int[] nums, int k) {
       int[] extra = new int[k];
       int p = 0;
       
@@ -39,6 +39,33 @@ public class Problem189 {
          System.out.println(arr[i] + " ");
       }
       System.out.println("--");
+   }
+   
+   private void reverse(int[] nums, int from, int to) {
+      for (int i = from, j = to; i < j; i++, j--) {
+         int tmp = nums[i];
+         nums[i] = nums[j];
+         nums[j] = tmp;
+      }
+   }
+   public void rotate(int[] nums, int k) {
+      k = k % nums.length;
+      reverse(nums, 0, nums.length - 1);
+      reverse(nums, 0, k - 1);
+      reverse(nums, k, nums.length - 1);
+   }
+   
+   @Test
+   public void test1() {
+      int[] a = {1,2,3,4,5,6,7};
+      rotate(a, 3);
+      Assert.assertArrayEquals(new int[] {5,6,7,1,2,3,4}, a);
+   }
+   @Test
+   public void test2() {
+      int[] a = {1};
+      rotate(a, 5);
+      Assert.assertArrayEquals(new int[] {1}, a);
    }
    
    @Test
