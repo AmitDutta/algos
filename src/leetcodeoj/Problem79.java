@@ -5,6 +5,8 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
+
+
 /* This code gives TLE. could not find reason
 * Well, previously was doing
 * for (Pair child : children)
@@ -14,10 +16,64 @@ import org.junit.Test;
 * got acceptance
 */
 public class Problem79 {
+   
+   private boolean found;
+   private boolean isInRange(int i, int j, int rows, int cols) {
+       if (i < 0 || i >= rows) return false;
+       if (j < 0 || j >= cols) return false;
+       return true;
+   }
+   private void dfs(char[][] board, String word, int i, int row, int col) {
+       int rows = board.length;
+       int cols = board[0].length;
+       // why put later? think ["a"], "a"
+       // if (!isInRange(row, col, rows, cols)) return;
+       if (i == word.length()) {
+           found = true;
+           return;
+       }
+       if (!isInRange(row, col, rows, cols)) return;
+       if (board[row][col] == '$') return;
+       if (word.charAt(i) != board[row][col]) return;
+       char ch = board[row][col];
+       board[row][col] = '$';
+       // top
+       dfs(board, word, i + 1, row - 1, col);
+       if (!found) {
+          // bottom
+          dfs(board, word, i + 1, row + 1, col);
+       }
+       if (!found) {
+          // left
+          dfs(board, word, i + 1, row, col - 1);
+       }
+       if (!found) {
+          // right
+          dfs(board, word, i + 1, row, col + 1);
+       }
+       board[row][col] = ch;
+   }
+   public boolean exist(char[][] board, String word) {
+       found = false;
+       if (board.length == 0) {
+           return false;
+       }
+       for (int i = 0; i < board.length; ++i) {
+           for (int j = 0; j < board[0].length; ++j) {
+                found = false;
+                dfs(board, word, 0, i, j);
+                if (found) {
+                    return found;
+                }
+           }
+       }
+       return false;
+   }
+   
    private int m, n;
    private char[][] board;
    private String str;
-   private boolean found;
+   //private boolean found;
    private boolean visited[][];
 
    private class Pair {
@@ -65,7 +121,7 @@ public class Problem79 {
       visited[x][y] = false;
    }
 
-   public boolean exist(char[][] board, String word) {
+   public boolean exist1(char[][] board, String word) {
       if (word.length() == 0 && board.length == 0) return true;
       if (word.length() > board.length * board[0].length) return false;
       this.board = board;
