@@ -1,12 +1,15 @@
 package ib;
 
 import java.util.ArrayList;
+
 import org.junit.*;
+
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Stack;
 
 public class NEXTGREATERCls {
-   public ArrayList<Integer> nextGreater(ArrayList<Integer> A) {
+   public ArrayList<Integer> nextGreater1(ArrayList<Integer> A) {
       if (A.size() == 0) return null;
       Stack<Integer> stack = new Stack<Integer>();
       Integer[] result = new Integer[A.size()];
@@ -27,6 +30,29 @@ public class NEXTGREATERCls {
       }
       return new ArrayList<Integer>(Arrays.asList(result));
    }
+   
+   public ArrayList<Integer> nextGreater(ArrayList<Integer> a) {
+      ArrayList<Integer> result = new ArrayList<Integer>();
+      Stack<Integer> stack = new Stack<Integer>();
+      for (int i = a.size() - 1; i >= 0; --i) {
+          int item = a.get(i);
+          while (!stack.isEmpty()) {
+              if (stack.peek() <= item) {
+                  stack.pop();
+              } else {
+                  break;
+              }
+          }
+          if (stack.isEmpty()) {
+              result.add(-1);
+          } else {
+              result.add(stack.peek());
+          }
+          stack.push(item);
+      }
+      Collections.reverse(result);
+      return result;
+  }
    @Test
    public void test1() {
       Integer[] x = {4,5,2,10};
