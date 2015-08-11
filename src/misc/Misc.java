@@ -1,7 +1,18 @@
 package misc;
 
+// y = (1 - x) * a + x * b
+/*
+ * int[] t = new int[2];
+ * t[0] = a;
+ * t[1] = b;
+ * y = t[x]
+ * */
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -67,8 +78,9 @@ public class Misc {
          map.put(ch, 0);
       }
       // count frequencies of each order items, and at same time, group all
-      // other items which are not in order
-      int i = -1;
+      // other items which are not in order at the end of string. Just fix
+      // the tail first.
+      /*int i = -1;
       for (int j = 0; j < nums.length; ++j) {
          if (!map.containsKey(nums[j])) {
             nums[++i] = nums[j];
@@ -76,12 +88,21 @@ public class Misc {
          if (map.containsKey(nums[j])) {
             map.put(nums[j], map.get(nums[j]) + 1);
          }
+      }*/
+      int i = nums.length;
+      for (int j = nums.length - 1; j >= 0; --j) {
+         if (!map.containsKey(nums[j])) {
+            nums[--i] = nums[j];
+         }
+         if (map.containsKey(nums[j])) {
+            map.put(nums[j], map.get(nums[j]) + 1);
+         }
       }
       // now all the non order items are in 0 to i
       // since order items will come first, lets move these to end
-      for (int j = i, k = nums.length - 1; j >= 0; --j, --k) {
+      /*for (int j = i, k = nums.length - 1; j >= 0; --j, --k) {
          nums[k] = nums[j];
-      }
+      }*/
       int start = 0;
       for (char ch : order) {
          int cnt = map.get(ch);
@@ -91,6 +112,128 @@ public class Misc {
          }
       }
    }
+   
+   // Given an array of sorted integers, how many 2 sum >= x
+   public int howManyTwoSum(int[] nums, int k) {
+      int result = 0;
+      int start = 0, end = nums.length - 1;
+      while (start < end) {
+         if (nums[start] + nums[end] < k) {
+            start++;
+         } else {
+            result += end - start;
+            end--;
+         }
+      }
+      return result;
+   }
+
+   // Given an array of sorted integers, how many 3 sum >= x
+   public int howManyThreeSum(int[] nums, int k) {
+      int result = 0;
+      for (int i = 0; i < nums.length - 2; ++i) {
+         int start = i + 1;
+         int end = nums.length - 1;
+         while (start < end) {
+            if (nums[i] + nums[start] + nums[end] < k) {
+               start++;
+            } else {
+               result += end - start;
+               end--;
+            }
+         }
+      }
+      return result;
+   }
+
+   // Given an array of almost sorted integers, two numbers are swaped
+   // two pointers
+   public void almostSorted(int[] nums) {
+      int a = -1, b = -1;
+      for (int k = 0; k < nums.length -1; ++k) {
+         if (nums[k] > nums[k + 1]) {
+            if (a == -1) {
+               a = k;
+               b = k + 1;
+            } else {
+               b = k + 1;
+            }
+         }
+      }
+      if (a != - 1 && b != - 1) {
+         int tmp = nums[a];
+         nums[a] = nums[b];
+         nums[b] = tmp;
+      }
+   }
+
+   private int depthSum(Object lst, int level) {
+      if (lst instanceof Integer) {
+         return ((Integer)lst) * level; 
+      }
+      List<Object> l = (List<Object>) lst;
+      int sum = 0;
+      for (Object o : l) {
+         sum += depthSum(o, level + 1);
+      }
+      return sum;
+   }
+   
+   public int depthSum(Object lst) {
+      return depthSum(lst, 0);
+   }
+   
+   public void isSorted(int[] a) {
+      int[] b = new int[a.length];
+      System.arraycopy(a, 0, b, 0, a.length);
+      Arrays.sort(a);
+      Assert.assertArrayEquals(a, b);
+   }
+
+   @Test
+   public void testDepthSum1() {
+      List<Object> lst = new ArrayList<Object>();
+      lst.add(Arrays.asList(1,1));
+      lst.add(2);
+      lst.add(Arrays.asList(1,1));
+      Assert.assertEquals(10, depthSum(lst));
+   }
+   @Test
+   public void almostSortedTest1() {
+      int[] a = new int[]{};
+      almostSorted(a);
+      isSorted(a);
+
+      int[] a1 = new int[]{1,2};
+      almostSorted(a1);
+      isSorted(a1);
+      
+      int[] a2 = new int[]{10, 20, 60, 40, 50, 30};
+      almostSorted(a2);
+      isSorted(a2);
+      
+      int[] a3 = new int[]{10, 20, 40, 30, 50, 60};
+      almostSorted(a3);
+      isSorted(a3);
+      
+      int[] a4 = new int[]{1, 5, 3};
+      almostSorted(a4);
+      isSorted(a4);
+   }
+
+   @Test
+   public void howManyTwoSum1() {
+      Assert.assertEquals(6, howManyTwoSum(new int[] {5,6,7,8}, 11));
+      Assert.assertEquals(1, howManyTwoSum(new int[] {5,6,7,8}, 15));
+   }
+
+   @Test
+   public void howManyThreeSum() {
+      Assert.assertEquals(4, howManyThreeSum(new int[] {5,6,7,8}, 11));
+      Assert.assertEquals(4, howManyThreeSum(new int[] {5,6,7,8}, 15));
+      Assert.assertEquals(0, howManyThreeSum(new int[] {5,6,7,8}, 150));
+   }
+
    @Test
    public void numDigitsTest() {
       Assert.assertEquals(1, numDigits(0));
@@ -132,4 +275,21 @@ public class Misc {
       orderSort(items, key);
       Assert.assertArrayEquals(expecteds, items);
    }
+   /*
+    * Input: A string equation that contains numbers, '+' and '*' 
+   //      Output: Result as int. 
+   //   
+   //      For example: 
+   //      Input: 3*5+8 (as String) 
+   //      Output: 23 (as int)
+    * */
+   // Stack will work, we will have to parenthesis them..here only + and *, so
+   //we can just tockenize with +, do all multiplication and add!
+   
+   /*You are given four integers 'a', 'b', 'y' and 'x', where 'x' can only be either zero or one. Your task is as follows: 
+
+   If 'x' is zero assign value 'a' to the variable 'y', if 'x' is one assign value 'b' to the variable 'y'. 
+
+   You are not allowed to use any conditional operator (including ternary operator). 
+   Follow up: Solve the problem without utilizing arithmetic operators '+ - * /'.*/
 }

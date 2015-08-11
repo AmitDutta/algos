@@ -1,5 +1,7 @@
 package leetcodeoj;
 
+import org.junit.*;
+
 public class Problem96 {
    public int numTrees(int n) {
       int[] cost = new int[n + 1];
@@ -12,5 +14,9 @@ public class Problem96 {
          cost[i] = sum;
       }
       return cost[n];
+   }
+   @Test
+   public void test1() {
+      System.out.println(numTrees(4));
    }
 }

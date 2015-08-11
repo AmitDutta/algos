@@ -5,7 +5,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-// This is a classic and differen type of backtracking
+// This is a classic and different type of backtracking
 // row-row, col-col diagonal test
 public class Problem51 {
    private List<String[]> result;

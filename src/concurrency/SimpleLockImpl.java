@@ -21,16 +21,18 @@ public class SimpleLockImpl implements SimpleLock{
       locked = true;
    }
 
+   // Since it is reentrant now, we can call lock from one thread any amount
+   // of time. Say, we called three times. Now, we should also call unlock three
+   // times to give the lock to waiting thread. if we do not consider count.
+   // one unlock will notify all waiting thread, which is not correct
    @Override
    public synchronized void UnLock() {
-      /* Why we check currenThread? If some other thread create a new lock
-       * instance, and directly call unlock, we would make counter -ve.*/
       if (Thread.currentThread() == lockingThred) {
          count--;
-      }
-      if (count == 0) {
-         locked = false;
-         notify();
+         if (count == 0) {
+            locked = false;
+            notify();
+         }
       }
    }
 }

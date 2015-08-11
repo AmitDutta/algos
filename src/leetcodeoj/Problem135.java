@@ -5,8 +5,34 @@ import org.junit.Assert;
 
 // http://yucoding.blogspot.com/2014/02/leetcode-question-candy.html
 // Need to study this theory, greedy
+
+// the new one with dp http://rleetcode.blogspot.com/2014/01/candy-java.html
 public class Problem135 {
+   
    public int candy(int[] ratings) {
+      if (ratings.length == 0 || ratings == null) return 0;
+      int[] cost = new int[ratings.length];
+      // everyone gets 1
+      for (int i = 0; i < cost.length; ++i) {
+          cost[i] = 1;
+      }
+      // left to  right
+      for (int i = 1; i < cost.length; ++i) {
+          if (ratings[i] > ratings[i - 1]) {
+              cost[i] = cost[i - 1] + 1;
+          }
+      }
+      // right to left [1,5,2,1] // correct 2
+      for (int i = cost.length - 2; i >= 0; --i) {
+          if (ratings[i] > ratings[i + 1] && cost[i] <= cost[i + 1]) {
+              cost[i] = cost[i + 1] + 1;
+          }
+      }
+      int result = 0;
+      for (int i = 0; i < cost.length; ++i) result += cost[i];
+      return result;
+   }
+   public int candy1(int[] ratings) {
      if (ratings.length == 0) return 0;
      if (ratings.length == 1) return 1;
      int[] left = new int[ratings.length];

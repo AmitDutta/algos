@@ -72,14 +72,21 @@ public class Sorts {
    }
 
    public static void bubblesort(int[] nums) {
-      // at each iteration, one items bubbles to its destination
       for (int i = 0; i < nums.length; ++i) {
-         for (int j = i + 1; j < nums.length; ++j) {
-            if (nums[i] > nums[j]) {
-               int tmp = nums[j];
-               nums[j] = nums[i];
-               nums[i] = tmp;
+         boolean flag = false;
+         for (int j = 1; j < nums.length; ++j) {
+            if (nums[j - 1] > nums[j]) {
+               int tmp = nums[j - 1];
+               nums[j - 1] = nums[j];
+               nums[j] = tmp;
+               flag = true;
             }
+         }
+         if (!flag) {
+            // no swap done in last itereation, so the array is alreadt sorted
+            // then runtime is O(1), therefore bubble sort is really good 
+            // for sorted arrays, it has the mechanism built in !
+            break;
          }
       }
    }
@@ -93,7 +100,7 @@ public class Sorts {
    }
    @Test
    public void test1() {
-      int[] num = {1,5,4,3,2,1};
+      int[] num = {1,2,3,4,5,6};
       bubblesort(num);
       for (int k = 0; k < num.length; ++k) {
          System.out.print(num[k]);

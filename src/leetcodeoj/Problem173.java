@@ -41,6 +41,44 @@ public class Problem173 {
         }
     }
     
+    public class BSTIterator2 {
+       private TreeNode item = null;
+       private Stack<TreeNode> stack;
+       public BSTIterator2(TreeNode root) {
+           TreeNode cur = root;
+           stack = new Stack<TreeNode>();
+           while (cur != null) {
+               stack.push(cur);
+               cur = cur.left;
+           }
+       }
+
+       /** @return whether we have a next smallest number */
+       public boolean hasNext() {
+           if (item == null) {
+               if (!stack.isEmpty()) {
+                   item = stack.pop();
+                   TreeNode cur = item.right;
+                   while (cur != null) {
+                       stack.push(cur);
+                       cur = cur.left;
+                   }
+               }
+           }
+           return item != null;
+       }
+
+       /** @return the next smallest number */
+       public int next() {
+           if (hasNext()) {
+               int val = item.val;
+               item = null;
+               return val;
+           }
+           return Integer.MIN_VALUE;
+       }
+   }
+    
     public class BST {
         private TreeNode root;
         public void insert(int data) {

@@ -22,6 +22,8 @@ public class SimpleThreadPool {
          isStopped = true;
          interrupt();
       }
+      
+      // synchronized key word is not required
       public synchronized boolean isStopped() {
          return isStopped;
       }
@@ -50,6 +52,8 @@ public class SimpleThreadPool {
          thread.stop();
       }
    }
+   
+   // Does it need to be synchronized? It's only a read
    public synchronized boolean isStopped() {
       return isStopped;
    }
