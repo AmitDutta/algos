@@ -1,8 +1,10 @@
 package ds;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
+import java.util.List;
 
 public class BST <Key extends Comparable<Key>, Value>{
    public class Node {
@@ -159,4 +161,39 @@ public class BST <Key extends Comparable<Key>, Value>{
    public Key kthSmallest(int k) {
       return kthSmallest(k, root).key;
    }
+   
+   // serialize a bst. note that, it can be done with {pre,in} or {post, in}
+   // but only pre is sufficient as well, since it is possible to uniquely
+   // identify bst with a pre order traversal. How? the sequence we insert the data
+   // in bst, is a pre order traversal. so, if we just write the prorder traversal
+   // that is enough..it is possible to uniquely generate bst with preorder
+   public Key[] serialize() {
+      List<Key> keys = new ArrayList<Key>();
+      Stack<Node> stack = new Stack<Node>();
+      if (root != null) {
+         stack.push(root);
+      }
+      while (!stack.isEmpty()) {
+         Node node = stack.pop();
+         keys.add(node.key);
+         if (node.right != null) {
+            stack.push(node.right);
+         }
+         if (node.left != null) {
+            stack.push(node.left);
+         }
+      }
+      return (Key[]) keys.toArray();
+   }
+   private int i = 0;
+   /*private void deserializeInt(Key[] keys, int i, int min, int max) {
+      if (keys[i] > min && keys[i] < max) {
+         
+      }
+   }
+   public Node deserialize(Key[] keys) {
+      i = 0;
+      deserializeInt(keys, i, Integer.MIN_VALUE, Integer.MAX_VALUE);
+      return root;
+   }*/
 }
