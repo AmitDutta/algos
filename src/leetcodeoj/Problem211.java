@@ -31,7 +31,7 @@ public class Problem211 {
       cur.value = true;
    }
    
-   public boolean searchInt(String word, int index, TrieNode node, TrieNode parent) {
+   /*public boolean searchInt(String word, int index, TrieNode node, TrieNode parent) {
       if (node == null) {
          return false;
       }
@@ -58,13 +58,29 @@ public class Problem211 {
          return false;
       }
       return searchInt(word, index + 1, node.lst[word.charAt(index) - 97], node);
+   }*/
+   
+   private boolean searchInt(String word, TrieNode node) {
+      if (word.length() == 0) return node.value;
+      char ch = word.charAt(0);
+      if (ch != '.') {
+         TrieNode children = node.lst[ch - 'a'];
+         if (children == null) return false;
+         return searchInt(word.substring(1), children);
+      } else {
+         for (int i = 0; i < node.lst.length; ++i) {
+            if (node.lst[i] != null) {
+               if (searchInt(word.substring(1), node.lst[i])) {
+                  return true;
+               }
+            }
+         }
+         return false;
+      }
    }
    
    public boolean search(String word) {
-      if (word.length() == 0) {
-         return root.value;
-      }
-      return searchInt(word, 0, root, null);
+      return searchInt(word, root);
    }
    
    @Test
