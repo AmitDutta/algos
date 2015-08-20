@@ -147,7 +147,7 @@ public class Misc {
    }
 
    // Given an array of almost sorted integers, two numbers are swaped
-   // two pointers
+   // two pointers, same as recoving bst with two swapped nodes
    public void almostSorted(int[] nums) {
       int a = -1, b = -1;
       for (int k = 0; k < nums.length -1; ++k) {

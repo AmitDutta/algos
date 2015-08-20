@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
 import org.junit.Assert;
@@ -49,7 +50,7 @@ public class Problem15 {
     }
     
     // A better solution, O(n^2)
-    List<List<Integer>> threeSum(int[] num) {
+    List<List<Integer>> threeSum2(int[] num) {
         LinkedList<List<Integer>> result = new LinkedList<List<Integer>>();
         HashSet<List<Integer>> set = new HashSet<List<Integer>>();
         Arrays.sort(num);
@@ -80,6 +81,40 @@ public class Problem15 {
         result.addAll(set);
         return result;
     }
+    
+    // see how repetation is avoided..we need check previous number. not forward
+    // [-2,0,1,1,2]
+    public List<List<Integer>> threeSum(int[] nums) {
+       List<List<Integer>> result = new ArrayList<List<Integer>>();
+       Arrays.sort(nums);
+       for (int i = 0; i < nums.length - 2; ++i) {
+           int j = i + 1, k = nums.length - 1;
+           if (i > 0 && nums[i] == nums[i - 1]) continue;
+           while (j < k) {
+               int tmp = nums[i] + nums[j] + nums[k];
+               if (tmp == 0) {
+                   List<Integer> lst = new ArrayList<Integer>();
+                   lst.add(nums[i]);
+                   lst.add(nums[j]);
+                   lst.add(nums[k]);
+                   result.add(lst);
+                   ++j;
+                   --k;
+                   while (j < k && nums[j] == nums[j - 1]) {
+                      ++j;
+                   }
+                   while (j < k && nums[k] == nums[k + 1]) {
+                      --k;
+                   }
+               } else if (tmp < 0) {
+                   ++j;
+               } else {
+                   --k;
+               }
+           }
+       }
+       return result;
+   }
 
     @Test
     public void binarySerachTest() {
@@ -92,6 +127,8 @@ public class Problem15 {
         Assert.assertEquals(-1, 
                 p15.binarySerach(new int[] {}, 0, 0, -3));
     }
+    
+    
     
     @Test
     public void threeSumTest() {
