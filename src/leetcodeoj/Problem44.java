@@ -1,47 +1,44 @@
-package leetcodeoj;
+        package leetcodeoj;
 
 import org.junit.*;
 
 public class Problem44 {
    public boolean isMatch(String s, String p) {
-      int starIndex, pi, ss, si;
-      // star index of star
-      pi =  si = 0;
-      starIndex = ss = -1;
+      int si, pi, star, ss;
+      si = pi = 0;
+      star = ss = -1;
       while (si < s.length()) {
-         if (pi < p.length() && s.charAt(si) == p.charAt(pi)) {
-            si++;
-            pi++;
-            continue;
-         }
-         if (pi < p.length() && p.charAt(pi) == '?') {
-            si++;
-            pi++;
-            continue;
-         }
-         if (pi < p.length() && p.charAt(pi) == '*') {
-            starIndex = pi;
-            pi++;
-            ss = si;
-            continue;
-         }
-         if (starIndex != -1) {
-            pi = starIndex + 1; // This line is important...
-            si = ++ss;
-            continue;
-         }
-         return false;
+          if (pi < p.length() && s.charAt(si) == p.charAt(pi)) {
+              si++;
+              pi++;
+              continue;
+          }
+          if (pi < p.length() && p.charAt(pi) == '?') {
+              si++;
+              pi++;
+              continue;
+          }
+          if (pi < p.length() && p.charAt(pi) == '*') {
+              star = pi;
+              ss = si;
+              pi++;
+              continue;
+          }
+          if (star != -1) {
+              pi = star + 1;
+              si = ++ss;
+              continue;
+          }
+          return false;
       }
       while (pi < p.length()) {
-         if (p.charAt(pi) == '*') {
-            pi++;
-            continue;
-         }else {
-            break;
-         }
+          if (p.charAt(pi) != '*') {
+              break;
+          }
+          pi++;
       }
       return pi == p.length();
-   }
+  }
    
    @Test
    public void Problem44Test() {
