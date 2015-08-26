@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.junit.Assert;
 
 public class Problem171 {
-   public int titleToNumber(String s) {
+   public int titleToNumber1(String s) {
       int result = 0;
       for (int i = 0; i < s.length(); ++i) {
          if (i > 0) result *= 26;
@@ -13,6 +13,13 @@ public class Problem171 {
       return result;
    }
 
+   public int titleToNumber(String s) {
+      int result = 0;
+      for (int i = 0; i < s.length(); ++i) {
+          result = result * 26 + (s.charAt(i) - 64);
+      }
+      return result;
+  }
    @Test
    public void Problem171Test() {
       Problem171 p171 = new Problem171();

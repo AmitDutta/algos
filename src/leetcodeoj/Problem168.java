@@ -5,7 +5,7 @@ import org.junit.Assert;
 
 public class Problem168 {
    // Tricky to prepare mod staff
-   public String convertToTitle(int n) {
+   public String convertToTitle1(int n) {
       StringBuffer buffer = new StringBuffer();
       while (n > 0) {
          int code = (n % 26);
@@ -16,6 +16,24 @@ public class Problem168 {
       }
       return buffer.reverse().toString();
    }
+   
+   public String convertToTitle(int n) {
+      StringBuffer buffer = new StringBuffer();
+      while (n > 26) {
+          int p = n % 26;
+          if (p == 0) {
+              --n;
+          }
+          p = p == 0 ? 26 : p;
+          char ch = (char) (64 + p);
+          buffer.append(ch);
+          n = n / 26;
+      }
+      n = n == 0 ? 26 : n;
+      char ch = (char) (64 + n);
+      buffer.append(ch);
+      return buffer.reverse().toString();
+  }
    
    @Test
    public void convertToTitleTest() {

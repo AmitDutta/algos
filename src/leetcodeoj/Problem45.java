@@ -4,8 +4,25 @@ import org.junit.Test;
 import org.junit.Assert;
 
 public class Problem45 {
+   
    // Latest one
    public int jump(int[] nums) {
+      int[] cost = new int[nums.length];
+      if (nums.length == 0) return 0;
+      cost[0] = 0;
+      int k = 1;
+      for (int i = 0; i < nums.length; ++i) {
+          while (k <= Math.min(nums.length - 1, i + nums[i])) {
+              cost[k++] = 1 + cost[i];
+          }
+          if (k >= nums.length) {
+              break;
+          }
+      }
+      return cost[nums.length - 1];
+  }
+   
+   public int jump3(int[] nums) {
       if (nums.length == 0) return 0;
       int[] cost = new int[nums.length];
       for (int i = 0; i < cost.length; ++i) {

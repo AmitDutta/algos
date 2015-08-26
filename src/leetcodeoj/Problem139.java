@@ -1,7 +1,9 @@
 package leetcodeoj;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.Test;
@@ -25,6 +27,8 @@ public class Problem139 {
         }
         return false;
     }
+    
+    // Runtime: O(n^2)
     
     public boolean wordBreak(String s, Set<String> dict) {
         Boolean cost[][] = new Boolean[s.length()][s.length()];
@@ -65,6 +69,30 @@ public class Problem139 {
         // printResult(cost, path , s);
 
         return cost[0][s.length() - 1];
+    }
+    
+    // This is O(n^2) as well
+    private Map<String, Boolean> map;
+    private boolean canBreak2(String str) {
+        if (map.containsKey(str)) {
+            return map.get(str);
+        }
+        for (int i = 0; i < str.length(); ++i) {
+            String left = str.substring(0, i + 1);
+            String right = str.substring(i + 1);
+            if (map.containsKey(left) && map.get(left) && canBreak2(right)) {
+                return true;
+            }
+        }
+        map.put(str, false);
+        return false;
+    }
+    public boolean wordBreak2(String s, Set<String> wordDict) {
+        map = new HashMap<String, Boolean>();
+        for (String str : wordDict) {
+            map.put(str, true);
+        }
+        return canBreak2(s);
     }
     
     void printResult(boolean cost[][], Integer path[], String s) {

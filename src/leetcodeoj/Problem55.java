@@ -4,6 +4,21 @@ import org.junit.Test;
 import org.junit.Assert;
 
 public class Problem55 {
+   public boolean canJump(int[] nums) {
+      if (nums.length == 0) return false;
+      if (nums.length == 1) return true;
+      int k = 0;
+      for (int i = 0; i < nums.length; ++i) {
+          if (k == i && nums[i] == 0) return false;
+          while (k < Math.min(nums.length - 1, i + nums[i])) {
+              k++;
+          }
+          if (k >= nums.length - 1) {
+              return true;
+          }
+      }
+      return false;
+  }
    // This one is a good example of optimization and corner cases.
    public boolean canJump1(int[] nums) {
       if (nums.length == 0) {
@@ -33,7 +48,7 @@ public class Problem55 {
       return cost[nums.length - 1];
    }
    
-   public boolean canJump(int[] nums) {
+   public boolean canJump2(int[] nums) {
       if (nums.length == 1) return true;
       int last = 0;
       for (int i = 0; i < nums.length; ++i) {
@@ -49,7 +64,7 @@ public class Problem55 {
   }
    
    // O(1) space
-   public boolean canJump2(int[] nums) {
+   public boolean canJump3(int[] nums) {
       if (nums.length == 0) return false;
       if (nums.length == 1) return true;
       int lastIndex = 0;

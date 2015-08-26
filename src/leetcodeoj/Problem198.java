@@ -20,7 +20,7 @@ public class Problem198 {
    
    // Same thing, without the other loop. Cost[i] now is the optimial solution
    // up to i
-   public int rob(int[] nums) {
+   public int rob2(int[] nums) {
       // Lets say cost[i] has the optimum cost upto i
       if (nums.length == 0) return 0;
       if (nums.length == 1) return nums[0];
@@ -31,5 +31,23 @@ public class Problem198 {
           cost[i] = Math.max(cost[i - 1], nums[i] + cost[i - 2]);
       }
       return cost[cost.length - 1];
+   }
+   // without extra space
+   public int rob(int[] nums) {
+      if (nums.length == 0) return 0;
+      if (nums.length == 1) return nums[0];
+      int[] cost = new int[nums.length];
+      int first, second;
+      first = second = -1;
+      first = nums[0];
+      if (nums.length > 1) {
+          second = Math.max(first, nums[1]);
+          for (int i = 2; i < nums.length; ++i) {
+              int tmp = second;
+              second = Math.max(second, nums[i] + first);
+              first = tmp;
+          }
+      }
+      return second;
   }
 }
