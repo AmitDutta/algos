@@ -5,7 +5,23 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.junit.*;
+/*
+ * Runtime:
+ * n and m: dimensions of the matrix
+ * k = length of the longest word
+ * p = number of word
 
+ * With a try: 
+ * Run time: n * m *  k * min(n*m, k)
+ * Storage: k
+
+ *  With a map of prefixes
+ * Run time: n * m * min(n*m, k)
+ * Storage: k*p
+ * 
+ * 
+ * 
+ */
 // Few optimizations done
 // 1. Mark trie leaf node false, once found. So no need to store words in hash
 // 2. See how visited is tackled without extra array, we can do this always!
