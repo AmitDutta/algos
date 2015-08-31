@@ -13,7 +13,7 @@ public class Lis {
    // it may not be the overall longest, for that we need to find max
    // consider [10,20,30,40,-1], now max list length is 4, but cost[4]
    // will be 1. cost[i] is the lis that includes i
-   public int longestIncreasingSubsequence(int[] nums) {
+   public int longestIncreasingSubsequence1(int[] nums) {
       // write your code here
       if (nums.length == 0) return 0;
       int[] cost = new int[nums.length];
@@ -42,6 +42,21 @@ public class Lis {
       System.out.println();
       return max;
    }
+   // we do not require the inner loop ..
+   public int longestIncreasingSubsequence(int[] nums) {
+      int[] cost = new int[nums.length];
+      for (int i = 0; i < nums.length; ++i) {
+         cost[i] = 1;
+      }
+      for (int i = 1; i < nums.length; ++i) {
+         cost[i] = cost[i - 1];
+         if (nums[i - 1] <= nums[i]) {
+            cost[i]++;
+         }
+      }
+      return cost[cost.length - 1];
+   }
+   
    @Test
    public void test1() {
       int[] a = {4,1,5,2,3,4};
